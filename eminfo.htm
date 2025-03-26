@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI & Financial Insights</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+        }
+        h1, h2 {
+            color: #f1c40f;
+        }
+        .emi-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        .mini-chart {
+            max-width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+        }
+        blockquote {
+            font-style: italic;
+            color: #ecf0f1;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Understanding EMI (Equated Monthly Installment)</h1>
+        <p>EMI is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. It is used for loans like home loans, car loans, and personal loans.</p>
+        
+        <h2>EMI in Different Countries</h2>
+        <ul>
+            <li><strong>Pakistan:</strong> EMI calculations follow a reducing balance method similar to India, with varied interest rates.</li>
+            <li><strong>India:</strong> EMI is calculated using standard banking formulas.</li>
+            <li><strong>USA:</strong> Uses amortization schedules where interest is higher in early months.</li>
+            <li><strong>UK:</strong> Some mortgages start with interest-only payments.</li>
+        </ul>
+        
+        <h2>Financial Wisdom</h2>
+        <blockquote>“An investment in knowledge pays the best interest.” – Benjamin Franklin</blockquote>
+        <blockquote>“The stock market is filled with individuals who know the price of everything, but the value of nothing.” – Philip Fisher</blockquote>
+        
+        <h2>EMI Comparison</h2>
+        <div class="chart-container">
+            <canvas id="emiChart" class="mini-chart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('emiChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Pakistan', 'India', 'USA', 'UK'],
+                datasets: [{
+                    label: 'EMI Rates (%)',
+                    data: [12, 10, 6, 5],
+                    backgroundColor: ['#3498db', '#f1c40f', '#e74c3c', '#2ecc71']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI & Financial Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+        }
+        h1, h2 {
+            color: #f1c40f;
+        }
+        canvas {
+            background: white;
+            border-radius: 10px;
+            max-width: 300px;
+            margin: auto;
+        }
+        blockquote {
+            font-style: italic;
+            color: #ecf0f1;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EMI (Equated Monthly Installment)</h1>
+        <p>EMI is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. EMIs are used for loans like home loans, car loans, and personal loans.</p>
+        
+        <h2>EMI Calculation in Different Countries</h2>
+        <p><strong>Pakistan:</strong> EMI calculations follow a reducing balance method similar to India, with varied interest rates.</p>
+        <p><strong>India:</strong> EMI is calculated using the formula: <em>P × r × (1 + r)^n / ((1 + r)^n - 1)</em></p>
+        <p><strong>USA:</strong> Uses amortization schedules where interest is higher in early months.</p>
+        <p><strong>UK:</strong> Similar to the US, but many mortgages use interest-only payments initially.</p>
+        
+        <h2>Popular Financial Quotes</h2>
+        <blockquote>“An investment in knowledge pays the best interest.” – Benjamin Franklin</blockquote>
+        <blockquote>“The stock market is filled with individuals who know the price of everything, but the value of nothing.” – Philip Fisher</blockquote>
+        
+        <h2>Small EMI Chart</h2>
+        <canvas id="emiChart" width="300" height="150"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('emiChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Pakistan', 'India', 'USA', 'UK'],
+                datasets: [{
+                    label: 'Average EMI Rate (%)',
+                    data: [12, 10, 6, 5],
+                    backgroundColor: ['#3498db', '#f1c40f', '#e74c3c', '#2ecc71']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>
