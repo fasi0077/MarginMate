@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>💰 EMI Calculator 🚀</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arizonia&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3f2fd, #ffffff);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #007BFF;
+            
+
+             text-decoration: none;
+            transition: transform 0.3s ease;
+            font-family: "Arizonia", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #007BFF;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger.active div:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 2em;
+            padding: 20px 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            margin: 15px 0;
+            border: 2px solid #007BFF;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            background: linear-gradient(135deg, #0056b3, #007BFF);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            font-size: 2em;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu.active {
+                display: flex;
+            }
+
+            /* Adjust the image to be vertical (stacked) on smaller devices */
+            .image {
+                width: 80%;
+                height: auto;
+                margin: 20px auto;
+            }
+        }
+
+
+
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: popIn 0.5s ease-in-out;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        input, select {
+            width: 85%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #007BFF;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+        button {
+            padding: 14px 20px;
+            border: none;
+            background: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+        .result {
+            font-size: 22px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .info-link {
+            display: block;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .info-link:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+  .title{
+    margin-top: 30px;
+  }
+</style>
+<body>
+    <header>
+        <a href="index.html" class="logo">MarginMate</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="main.html">Features</a>
+            <a href="priceing.htm">Pricing</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="close-btn" onclick="toggleMenu()">×</button>
+            <a href="index.html">Home</a>
+            <a href="main.html">Features</a>
+            <a href="priceing.htm">Pricing</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+
+
+
+
+    <div class="emi">
+
+
+        <body>
+            <div class="title">📊 Advanced EMI Calculator</div>
+    <div class="container">
+        <h2>💰 Calculate Your EMI Easily</h2>
+        <label for="currency">Select Currency:</label>
+        <select id="currency">
+            <option value="INR">🇮🇳 Indian Rupee (₹)</option>
+            <option value="PKR">🇵🇰 Pakistani Rupee (₨)</option>
+            <option value="CNY">🇨🇳 Chinese Yuan (¥)</option>
+            <option value="JPY">🇯🇵 Japanese Yen (¥)</option>
+            <option value="THB">🇹🇭 Thai Baht (฿)</option>
+        </select>
+        <input type="number" id="loanAmount" placeholder="Enter Loan Amount" required>
+        <input type="number" id="interestRate" placeholder="Annual Interest Rate (%)" required>
+        <input type="number" id="loanTenure" placeholder="Loan Tenure (Months)" required>
+        <button onclick="calculateEMI()">📊 Calculate EMI</button>
+        <a href="eminfo.htm" class="info-link" target="_blank">📖 Learn What is EMI</a>
+        <div class="result" id="emiResult"></div>
+        <canvas id="emiChart"></canvas>
+    </div>
+            
+        
+        </body>
+        </html>
+        
+
+
+
+    </div>
+    <script>
+        function calculateEMI() {
+            let P = document.getElementById("loanAmount").value;
+            let R = document.getElementById("interestRate").value / 12 / 100;
+            let N = document.getElementById("loanTenure").value;
+            let currency = document.getElementById("currency").value;
+            
+            if (!P || !R || !N) {
+                alert("Please fill all fields");
+                return;
+            }
+            
+            let EMI = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+            let currencySymbol = {
+                "INR": "₹",
+                "PKR": "₨",
+                "CNY": "¥",
+                "JPY": "¥",
+                "THB": "฿"
+            }[currency];
+            
+            document.getElementById("emiResult").innerHTML = `📌 Your Monthly EMI: ${currencySymbol}${EMI.toFixed(2)}`;
+            renderChart(P, EMI, N);
+        }
+        
+        function renderChart(principal, emi, tenure) {
+            let ctx = document.getElementById('emiChart').getContext('2d');
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+            window.myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Total Principal', 'Total Interest'],
+                    datasets: [{
+                        data: [principal, (emi * tenure) - principal],
+                        backgroundColor: ['#007BFF', '#ffcc00']
+                    }]
+                }
+            });
+        }
+    </script>

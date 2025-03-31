@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arizonia&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Arizonia&family=WindSong:wght@400;500&display=swap');
+    body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #007BFF;
+    
+
+     text-decoration: none;
+    transition: transform 0.3s ease;
+    font-family: "Arizonia", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #007BFF;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+nav a:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #007BFF;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.hamburger.active div:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active div:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active div:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.mobile-menu.active {
+    display: flex;
+    opacity: 1;
+}
+
+.mobile-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 2em;
+    padding: 20px 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    margin: 15px 0;
+    border: 2px solid #007BFF;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu a:hover {
+    background: linear-gradient(135deg, #0056b3, #007BFF);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    font-size: 2em;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    z-index: 1001;
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .mobile-menu.active {
+        display: flex;
+    }
+
+    /* Adjust the image to be vertical (stacked) on smaller devices */
+    .image {
+        width: 80%;
+        height: auto;
+        margin: 20px auto;
+    }
+}
+
+
+    .heading-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .heading {
+        font-family: 'Poppins', sans-serif;
+        font-size: 5rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        
+  font-family: "Arizonia", serif;
+  font-weight: 400;
+  font-style: normal;
+
+
+    }
+
+    .tagline {
+        font-family: 'Roboto Slab', serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: #555;
+        margin-top: 10px;
+        font-style: italic;
+    }
+    .calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.display {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    font-size: 2em;
+    text-align: right;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.btn {
+    padding: 20px;
+    font-size: 1.5em;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    color: #333;
+    display: flex;
+    /* align-items: center; */
+
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    color: #333;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    min-height: 100vh;
+}
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.display {
+    width: 100%;
+    padding: 20px;
+    font-size: 2em;
+    text-align: right;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.btn {
+    padding: 20px;
+    font-size: 1.5em;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.btn:hover {
+    background: linear-gradient(135deg, #ff9800, #ffeb3b); /* Reverse gradient on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .calculator {
+        width: 90%;
+    }
+
+    .display {
+        font-size: 1.5em;
+    }
+
+    .buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .btn {
+        font-size: 1.2em;
+        padding: 10px;
+    }
+    .calculator{
+        margin-bottom: 70px ;
+    }
+ 
+}
+
+@media (max-width: 480px) {
+    .calculator {
+        width: 95%;
+    }
+
+    .display {
+        font-size: 1.2em;
+    }
+
+    .btn {
+        font-size: 1em;
+        padding: 10px;
+    }
+  
+}
+.btn {
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #ff9900, #ffcc00);
+}
+footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 0.9em;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px; /* Added margin to give space from the main content */
+        }
+
+    
+</style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">MarginMate</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="main.html">Features</a>
+            <a href="priceing.htm">Pricing</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="close-btn" onclick="toggleMenu()">×</button>
+            < <a href="index.html">Home</a>
+            <a href="main.html">Features</a>
+            <a href="priceing.htm">Pricing</a>
+            <a href='contact.html'>Contact</a>
+        </div>
+    </header>
+    <div class="heading-container">
+        <h1 class="heading">Simple Calculator</h1>
+        <p class="tagline">Effortlessly calculate your numbers with style and ease!</p>
+    </div>
+
+   <div class="card">
+    <div class="calculator">
+        <input type="text" class="display" readonly />
+        <div class="buttons">
+          <button class="btn">7</button>
+          <button class="btn">8</button>
+          <button class="btn">9</button>
+          <button class="btn">/</button>
+          <button class="btn">4</button>
+          <button class="btn">5</button>
+          <button class="btn">6</button>
+          <button class="btn">*</button>
+          <button class="btn">1</button>
+          <button class="btn">2</button>
+          <button class="btn">3</button>
+          <button class="btn">-</button>
+          <button class="btn">0</button>
+          <button class="btn">.</button>
+          <button class="btn">=</button>
+          <button class="btn">+</button>
+          <button class="btn">C</button>
+
+        </div>
+   </div>
+      </div>
+      
+    <footer>
+        &copy; 2025 MarginMate. All rights reserved.
+    </footer>
+      
+    <script>
+         function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        const display = document.querySelector('.display');
+const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    const value = button.textContent;
+
+    if (value === '=') {
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = 'Error';
+      }
+    } else if (value === 'C') {
+      display.value = '';
+    } else {
+      display.value += value;
+    }
+  });
+});
+
+    document.addEventListener('keydown', function(event) {
+        const display = document.querySelector('.display');
+        const key = event.key;
+
+        if (key === 'Enter') {
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = 'Error';
+            }
+        } else if (key === 'Backspace') {
+            display.value = display.value.slice(0, -1);
+        } else if (key === 'Escape') {
+            display.value = '';
+        } else if (/[0-9+\-*/.]/.test(key)) {
+            display.value += key;
+        }
+    });
+
+
+
+    </script>
+</body>
+</html>

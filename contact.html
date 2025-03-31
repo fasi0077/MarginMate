@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* background: linear-gradient(90deg, #BE8CEF 0%, rgba(61, 46, 232, 0.83) 100%); */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 
+                        0 10px 10px rgba(0, 0, 0, 0.22);
+            width: 768px;
+            max-width: 100%;
+            min-width: 370px;
+            display: flex;
+            overflow: hidden;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .form-container {
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .left-container {
+            flex: 1;
+            background-color: #e1306c;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .right-container {
+            flex: 1;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .right-inner-container {
+            width: 80%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus, textarea:focus {
+            outline: 2px solid #e1306c;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            background-color: #e1306c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c1275b;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+            .form-container {
+                flex-direction: column;
+            }
+            .left-container {
+                width: 100%;
+                order: 1;
+            }
+            .right-container {
+                width: 100%;
+                order: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="left-container">
+                <div>
+                    <h2>Let's Chat</h2>
+                    <p>Have a question? Want to start a project? Feel free to contact us.</p>
+                </div>
+            </div>
+            <div class="right-container">
+                <div class="right-inner-container">
+                    <h2>Contact <span style="color:#4c69ba;">Us</span></h2>
+                    <form id="contactForm" action="mailto:Itxfasi0077@gmail.com" method="post" enctype="text/plain">
+                        <input type="text" name="Name" placeholder="Name *" required />
+                        <input type="email" name="Email" placeholder="Email *" required />
+                        <input type="tel" name="Phone" placeholder="Phone" />
+                        <textarea name="Message" rows="4" placeholder="Message"></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

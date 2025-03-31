@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Margin Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+IN:wght@100..400&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="hero.css">
+  
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Maximize Profits with Ease Using Our Margin Calculator</h1>
+            <div id="wordContainer"></div>
+            <!-- <p>Accurately calculate your profit margins and optimize business performance with our user-friendly tool. Save time and improve decision-making instantly.</p> -->
+            <div class="cta">
+              <a href="main.html"><button class="primary" src="index.html">Calculate Now</button></a>
+                <button class="secondary">Learn More</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="illustration.png" alt="Illustration of a margin calculator" />
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <img src="rea.png" alt="Real-Time Results">
+            <h3>Real-Time Results</h3>
+            <p>Get instant calculations for better decision-making.</p>
+        </div>
+        <div class="feature">
+            <img src="acc.png" alt="High Accuracy">
+            <h3>High Accuracy</h3>
+            <p>Ensure precise profit margin calculations every time.</p>
+        </div>
+        <div class="feature">
+            <img src="user.jpg" alt="User-Friendly">
+            <h3>User-Friendly</h3>
+            <p>Intuitive design for seamless user experience.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Connect with us:</p>
+        <div class="social-links">
+            <a href="mailto:itxfasi0077@gmail.com" title="Email">
+                <img src="icons8-gmail-48 (1).png" alt="Gmail">
+            </a>
+            <a href="https://web.facebook.com/faisal.kabir.754918" title="Facebook">
+                <img src="facebook_5968764.png" alt="Facebook" class="icon">
+            </a>
+            <a href="https://instagram.com/Faisal2u21" title="Instagram">
+                <img src="instagram_2111463.png" alt="Instagram" class="icon">
+            </a>
+            <a href="https://tiktok.com/@Faisal2u21" title="TikTok">
+                <img src="tik-tok_3046121.png" alt="TikTok" class="icon">
+            </a>
+        </div>
+    </footer>
+
+<script>
+    const words = [
+        "Calculating profits made simpler and faster.",
+        "Optimize business performance effortlessly today.",
+        "Accurate insights for confident decision-making.",
+        "Save time with our smart calculator."
+    ];
+    let index = 0;
+    const wordContainer = document.getElementById("wordContainer");
+
+    function displayWordByLetter(word, callback) {
+        let currentText = "";
+        let charIndex = 0;
+        wordContainer.style.opacity = "0"; // Reset visibility
+        setTimeout(() => {
+            // Fade in after reset
+            wordContainer.style.opacity = "1";
+
+            const letterInterval = setInterval(() => {
+                currentText += word[charIndex];
+                wordContainer.innerText = currentText;
+                charIndex++;
+
+                if (charIndex === word.length) {
+                    clearInterval(letterInterval);
+                    if (callback) callback(); // Call the callback after the word is fully displayed
+                }
+            }, Math.random() * 100 + 50); // Randomize speed between 50ms and 150ms
+        }, 500); // Short delay before starting each word
+    }
+
+    function changeWord() {
+        index = (index + 1) % words.length; // Cycle through the words
+        displayWordByLetter(words[index], () => {
+            setTimeout(() => {
+                changeWord(); // Start changing to the next word after a pause
+            }, 2000); // Pause for 2 seconds before the next word starts
+        });
+    }
+
+    // Start the word-changing process
+    displayWordByLetter(words[index], () => {
+        setTimeout(() => {
+            changeWord();
+        }, 2000);
+    });
+</script>
+</body>
+</html>

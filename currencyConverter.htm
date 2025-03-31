@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arizonia&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3f2fd, #ffffff);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #007BFF;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            font-family: "Arizonia", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #007BFF;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger.active div:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 2em;
+            padding: 20px 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            margin: 15px 0;
+            border: 2px solid #007BFF;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            background: linear-gradient(135deg, #0056b3, #007BFF);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            font-size: 2em;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu.active {
+                display: flex;
+            }
+        }
+
+        .converter-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 50px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .converter-title {
+            font-size: 2em;
+            font-weight: 600;
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Bangers', cursive;
+        }
+
+        .converter {
+            width: 100%;
+        }
+
+        .converter input[type="number"] {
+            width: 90%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .converter input[type="number"]:focus {
+            border-color: #0056b3;
+        }
+
+        .currency-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .currency-row select {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .currency-row select:focus {
+            border-color: #0056b3;
+        }
+
+        .swap-btn {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .swap-btn:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+       
+
+        .converter button {
+            width: 100%;
+            padding: 15px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .converter button:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #007BFF;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+.swap-btn:active {
+    background-color: #FF9E00;
+}
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">MarginMate</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="main.html">Features</a>
+            <a href="priceing.htm">Pricing</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="close-btn" onclick="toggleMenu()">×</button>
+            <a href="index.html">Home</a>
+            <a href="main.html">Features</a>
+            <a href="priceing.htm">Pricing</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+
+    <div class="converter-container">
+        <div class="converter-title">Smart Currency Converter</div>
+        <div class="converter">
+            <input type="number" id="amount" placeholder="Enter amount">
+            <div class="currency-row">
+                <select id="fromCurrency">
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                    <option value="INR">INR - Indian Rupee</option>
+                </select>
+                <button class="swap-btn" onclick="swapCurrencies()">⇆</button>
+                <select id="toCurrency">
+                    <option value="INR">INR - Indian Rupee</option>
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                </select>
+            </div>
+            <button onclick="convertCurrency()">Convert</button>
+            <h3 id="result"></h3>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        function swapCurrencies() {
+            const fromCurrency = document.getElementById('fromCurrency');
+            const toCurrency = document.getElementById('toCurrency');
+            const temp = fromCurrency.value;
+            fromCurrency.value = toCurrency.value;
+            toCurrency.value = temp;
+        }
+
+        function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            // Replace this with your actual API call or conversion logic
+            const conversionRates = {
+                USD: { EUR: 0.85, GBP: 0.73, INR: 75.0 },
+                EUR: { USD: 1.18, GBP: 0.86, INR: 88.0 },
+                GBP: { USD: 1.37, EUR: 1.16, INR: 102.0 },
+                INR: { USD: 0.013, EUR: 0.011, GBP: 0.0098 }
+            };
+
+            const rate = conversionRates[fromCurrency][toCurrency];
+            const result = (amount * rate).toFixed(2);
+            document.getElementById('result').innerText = `${amount} ${fromCurrency} = ${result} ${toCurrency}`;
+        }
+    </script>
+</body>
+</html>
